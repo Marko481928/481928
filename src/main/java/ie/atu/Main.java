@@ -24,7 +24,7 @@ public class Main {
         for(int i = 1; i <= attempts; i++)
         {
             System.out.println("\nEnter Student's ID");
-            String ID = scan.next();
+            String ID = scan.nextLine();
 
             if (registrations.contains(ID))
             {
@@ -33,24 +33,27 @@ public class Main {
             }
             else
             {
-                count++;
-                if(count > capacity)
+                if(ID.isBlank() || ID.isEmpty())
                 {
-                    System.out.println(ID + "- Workshop full");
+                    System.out.println("ID can't be null");
                     rejectedAttempts++;
                 }
                 else
                 {
-                    System.out.println(ID + " - Registration successful.");
-                    registrations.add(ID);
+                    count++;
+                    if(count > capacity)
+                    {
+                        System.out.println(ID + "- Workshop full\n");
+                        rejectedAttempts++;
+                        count--;
+                    }
+                    else
+                    {
+                        System.out.println(ID + " - Registration successful.");
+                        registrations.add(ID);
+                    }
                 }
 
-            }
-
-            if(ID.isBlank() || ID.isEmpty())
-            {
-                System.out.println("ID can't be null");
-                rejectedAttempts++;
             }
         }
 
@@ -59,6 +62,6 @@ public class Main {
         workshop.printinfo();
         System.out.println(count + " - accepted attempts");
         System.out.println(rejectedAttempts + " - rejected attempts");
-        System.out.println(capacity - count + rejectedAttempts + " - places remaining");
+        System.out.println(capacity - count + " - places remaining");
     }
 }
